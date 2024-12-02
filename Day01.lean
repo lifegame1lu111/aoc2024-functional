@@ -14,10 +14,10 @@ def parse (content : String) : List ℤ × List ℤ :=
 
 def part1 (ns : List ℤ) (ms : List ℤ) : ℕ := ns
     |>.zipWith (· - ·) ms
-    |>.foldl (fun acc n => acc + n.natAbs) (0 : ℕ)
+    |>.foldl (· + ·.natAbs) (0 : ℕ)
 
 def part2 (ns : List ℤ) (ms : List ℤ) : ℕ := ns
-    |>.foldl (fun acc n => acc + (n.natAbs * (ms |>.filter (· == n) |>.length))) (0 : ℕ)
+    |>.foldl (fun acc n => acc + (n.toNat * (ms |>.filter (· == n) |>.length))) (0 : ℕ)
 
 def main : IO Unit := do
     let content ← IO.FS.readFile "input1.txt"
