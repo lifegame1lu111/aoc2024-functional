@@ -9,7 +9,6 @@ solve xs ys =
       part2 = foldl (\acc x -> acc + (x * (length $ filter (== x) ys))) 0 xs
     in (part1, part2)
 
-
 parse :: String -> ([Int], [Int])
 parse = go ([], []) 
     . words 
