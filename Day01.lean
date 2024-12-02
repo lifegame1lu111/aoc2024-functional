@@ -19,7 +19,7 @@ def part1 (ns : List ℤ) (ms : List ℤ) : ℕ := ns
 def part2 (ns : List ℤ) (ms : List ℤ) : ℕ := ns
     |>.foldl (fun acc n => acc + (n.natAbs * (ms |>.filter (· == n) |>.length))) (0 : ℕ)
 
-partial def main : IO Unit := do
+def main : IO Unit := do
     let content ← IO.FS.readFile "input1.txt"
     let parsed := parse content
 
