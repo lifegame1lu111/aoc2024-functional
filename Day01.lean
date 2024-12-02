@@ -1,6 +1,5 @@
 import Batteries.Data.String
 import Mathlib.Data.List.Sort
-import Init.Data.String
 
 def parse (content : String) : List ℤ × List ℤ :=
     let numbers := content
