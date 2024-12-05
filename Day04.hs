@@ -122,13 +122,9 @@ main = do
 
     let grid = lines content
     let gridDims = getGridDims grid 
-    let grid' = labelGrid 2 grid gridDims
 
-    let resultPart1 = part1 grid'
-
-    let grid'' = labelGrid 0 grid gridDims
-
-    let resultPart2 = part2 grid''
+    let resultPart1 = part1 $ labelGrid 2 grid gridDims
+    let resultPart2 = part2 $ labelGrid 0 grid gridDims
 
     putStrLn $ "Part 1: " ++ show resultPart1
     putStrLn $ "Part 2: " ++ show resultPart2
