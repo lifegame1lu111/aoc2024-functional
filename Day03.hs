@@ -58,6 +58,5 @@ main = do
     let parsed = parse parser "" content
     let resultPart1 = part1 parsed
     let resultPart2 = part2 parsed
-    print parsed
     putStrLn $ "Part 1: " ++ show resultPart1
     putStrLn $ "Part 2: " ++ show resultPart2
