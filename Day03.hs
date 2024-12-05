@@ -1,6 +1,4 @@
 {-# LANGUAGE LambdaCase #-}
-module Main where
-
 import Text.Megaparsec
 import Text.Megaparsec.Char
 import Data.Void
