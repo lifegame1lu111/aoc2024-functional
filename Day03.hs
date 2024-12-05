@@ -32,6 +32,7 @@ parser = catMaybes <$> many (do
     doParser = try $ string "do()" >> pure Do
     dontParser :: Parsec Void String Op
     dontParser = try $ string "don't()" >> pure Dont
+    
 part1 :: Either a [Op] -> Int
 part1 = \case
     Left _ -> 0
