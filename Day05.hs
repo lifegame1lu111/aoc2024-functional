@@ -32,7 +32,7 @@ areWellOrdered :: [[Int]] -> [Int] -> Bool
 areWellOrdered antiRules pages = not . or $ antiRules
     & map (`isSubsequenceOf` pages)
 
-part1 :: ([[Int]], [[Int]]) -> Int
+part1 :: [[Int]] -> Int
 part1 (antiRules, pageEntries) = sum $ pageEntries
     & map middlePage 
 
@@ -52,7 +52,7 @@ main = do
 
     let (ordered, unordered) = partition (areWellOrdered antiRules) pageEntries
     
-    let resultPart1 = part1 (antiRules, ordered)
+    let resultPart1 = part1 ordered
     let resultPart2 = part2 (antiRules, unordered)
     
     putStrLn $ "Part 1: " ++ show resultPart1
