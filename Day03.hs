@@ -55,8 +55,11 @@ part2 = \case
 main :: IO ()
 main = do
     content <- readFile "input3.txt"
+    
     let parsed = parse parser "" content
+    
     let resultPart1 = part1 parsed
     let resultPart2 = part2 parsed
+    
     putStrLn $ "Part 1: " ++ show resultPart1
     putStrLn $ "Part 2: " ++ show resultPart2
