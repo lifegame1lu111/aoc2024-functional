@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 import qualified Data.Text as T
 import Data.Function ((&))
-import Data.List (isSubsequenceOf, elemIndex, elemIndices, find)
+import Data.List (isSubsequenceOf, elemIndex, sortBy, partition)
 import Data.Maybe (fromJust)
 
 parse :: T.Text -> ([[Int]], [[Int]])
@@ -33,50 +33,28 @@ areWellOrdered :: [[Int]] -> [Int] -> Bool
 areWellOrdered antiRules pages = not . or $ antiRules
     & map (`isSubsequenceOf` pages)
 
-
 part1 :: ([[Int]], [[Int]]) -> Int
 part1 (antiRules, pageEntries) = sum $ pageEntries
-    & filter (areWellOrdered antiRules)
     & map middlePage 
-
-swapElements :: [Int] -> [Int] -> [Int]
-swapElements (a : b : []) list = (take idx list) 
-    ++ [b] 
-    ++ (take (idx' - idx - 1) . drop (idx + 1) $ list) 
-    ++ [a] 
-    ++ (drop (idx' + 1) list)
-  where
-    idx = fromJust $ elemIndex a list 
-    idx' = fromJust $ elemIndex b list
-swapElements _ list = list
 
 part2 :: ([[Int]], [[Int]]) -> Int
 part2 (antiRules, pageEntries) = sum $ pageEntries
-    & filter (not . areWellOrdered antiRules)
-    & map fixOrdering
+    & map (sortBy fixOrdering)
     & map middlePage
   where
-    ruleViolated :: [Int] -> Maybe [Int]
-    ruleViolated pages = antiRules
-        & find (`isSubsequenceOf` pages)
-
-    fixOrdering :: [Int] -> [Int]
-    fixOrdering pages = go pages False
-
-    go :: [Int] -> Bool -> [Int]
-    go pages True = pages
-    go pages False = let violated = fromJust . ruleViolated $ pages
-                         pages' = swapElements violated pages
-                     in go pages' (areWellOrdered antiRules pages')
+    fixOrdering :: Int -> Int -> Ordering
+    fixOrdering a b = if [a, b] `elem` antiRules then GT else LT
 
 main :: IO ()
 main = do
     content <- readFile "input5.txt"
     
-    let parsed = parse . T.pack $ content
+    let (antiRules, pageEntries) = parse . T.pack $ content
+
+    let (ordered, unordered) = partition (areWellOrdered antiRules) pageEntries
     
-    let resultPart1 = part1 parsed
-    let resultPart2 = part2 parsed
+    let resultPart1 = part1 (antiRules, ordered)
+    let resultPart2 = part2 (antiRules, unordered)
     
     putStrLn $ "Part 1: " ++ show resultPart1
     putStrLn $ "Part 2: " ++ show resultPart2
