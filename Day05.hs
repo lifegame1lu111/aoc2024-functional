@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 import qualified Data.Text as T
 import Data.Function ((&))
-import Data.List (isSubsequenceOf, elemIndex, sortBy, partition)
+import Data.List (isSubsequenceOf, sortBy, partition)
 
 parse :: T.Text -> ([[Int]], [[Int]])
 parse content = (antiRules, pageEntries)
