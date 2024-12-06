@@ -74,8 +74,11 @@ part2 (antiRules, pageEntries) = sum $ pageEntries
 main :: IO ()
 main = do
     content <- readFile "input5.txt"
+    
     let parsed = parse . T.pack $ content
+    
     let resultPart1 = part1 parsed
     let resultPart2 = part2 parsed
+    
     putStrLn $ "Part 1: " ++ show resultPart1
     putStrLn $ "Part 2: " ++ show resultPart2
