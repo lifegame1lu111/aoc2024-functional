@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 import qualified Data.Text as T
 import Data.Function ((&))
-import Data.List (isSubsequenceOf, elemIndex, elemIndices)
+import Data.List (isSubsequenceOf, elemIndex, elemIndices, find)
 import Data.Maybe (fromJust)
 
 parse :: T.Text -> ([[Int]], [[Int]])
@@ -56,19 +56,17 @@ part2 (antiRules, pageEntries) = sum $ pageEntries
     & map fixOrdering
     & map middlePage
   where
-    rulesViolated :: [Int] -> [[Int]]
-    rulesViolated pages = antiRules
-        & map (`isSubsequenceOf` pages)
-        & elemIndices True
-        & map (antiRules !!)
+    ruleViolated :: [Int] -> Maybe [Int]
+    ruleViolated pages = antiRules
+        & find (`isSubsequenceOf` pages)
 
     fixOrdering :: [Int] -> [Int]
     fixOrdering pages = go pages False
 
     go :: [Int] -> Bool -> [Int]
     go pages True = pages
-    go pages False = let violated = rulesViolated pages
-                         pages' = swapElements (violated !! 0) pages
+    go pages False = let violated = fromJust . ruleViolated $ pages
+                         pages' = swapElements violated pages
                      in go pages' (areWellOrdered antiRules pages')
 
 main :: IO ()
