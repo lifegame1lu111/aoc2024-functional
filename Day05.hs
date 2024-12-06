@@ -2,7 +2,6 @@
 import qualified Data.Text as T
 import Data.Function ((&))
 import Data.List (isSubsequenceOf, elemIndex, sortBy, partition)
-import Data.Maybe (fromJust)
 
 parse :: T.Text -> ([[Int]], [[Int]])
 parse content = (antiRules, pageEntries)
