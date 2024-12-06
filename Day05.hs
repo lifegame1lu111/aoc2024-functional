@@ -33,7 +33,7 @@ areWellOrdered antiRules pages = not . or $ antiRules
     & map (`isSubsequenceOf` pages)
 
 part1 :: [[Int]] -> Int
-part1 (antiRules, pageEntries) = sum $ pageEntries
+part1 pageEntries = sum $ pageEntries
     & map middlePage 
 
 part2 :: ([[Int]], [[Int]]) -> Int
